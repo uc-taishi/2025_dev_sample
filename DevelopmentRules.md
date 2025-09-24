@@ -19,3 +19,12 @@
 [こちらのリンク](https://qiita.com/0xv80/items/597300827b212cab4328)の手順でインストールを行うこと
 
 ## 5. DevContainerの環境構築
+
+VSCodeにDevContainerの拡張機能（ms-vscode-remote.remote-containers）をインストールしてから以下のコマンドを実行し、対象のリポジトリをクローンする。
+
+```bash
+git clone https://github.com/uc-taishi/2025_dev_sample.git
+```
+
+その後、クローンしたワークスペースを開き、Ctrl+Shift+Pで「開発コンテナ：コンテナで再度開く」を行うことで、対象のリソースを起動する。
+実装のルールはNextRules.md、GitのルールはGitRules.mdを参照すること。

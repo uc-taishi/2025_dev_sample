@@ -1,0 +1,31 @@
+{
+  "name": "development-sample",
+  "dockerFile": "./Dockerfile",
+  "context": "..",
+
+  // ルートを開く
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+
+  "remoteUser": "node",
+  "forwardPorts": [3000],
+  "portsAttributes": { "3000": { "label": "Next.js" } },
+
+  // ルートから .devcontainer/scripts を叩く
+  "postCreateCommand": "bash .devcontainer/scripts/postCreate.sh",
+  "postAttachCommand": "bash .devcontainer/scripts/postAttach.sh",
+
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "editor.formatOnSave": true,
+        // ルート→サブフォルダの TypeScript を参照
+        "typescript.tsdk": "sample-application/node_modules/typescript/lib",
+        "files.exclude": { "**/.next": true, "**/node_modules": true }
+      },
+      "extensions": [
+        "dbaeumer.vscode-eslint",
+        "Prisma.prisma"
+      ]
+    }
+  }
+}
