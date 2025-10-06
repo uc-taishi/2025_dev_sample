@@ -1,34 +1,54 @@
 import React, { ButtonHTMLAttributes, ReactNode } from 'react';
 
 // ボタンコンポーネントのPropsを定義
-// ButtonHTMLAttributes<HTMLButtonElement>で、HTMLのbutton要素の全ての属性を継承
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-    children: ReactNode; // ボタン内に表示する内容 (テキスト、アイコンなど)
-    variant?: 'primary' | 'secondary' | 'danger'; // ボタンの種類
-    size?: 'sm' | 'md' | 'lg'; // ボタンのサイズ
+    children: ReactNode;
+    variant?: 'primary' | 'secondary' | 'danger';
+    size?: 'sm' | 'md' | 'lg';
 }
 
-const Button = ({ children, variant = 'primary', size = 'md', className, ...rest }: ButtonProps) => {
-    // CSSクラスを動的に生成
-    const baseStyles = 'rounded-md font-semibold transition-colors duration-200 focus:outline-none';
-
-    const variantStyles = {
-        primary: 'bg-blue-600 hover:bg-blue-700 text-white',
-        secondary: 'bg-gray-200 hover:bg-gray-300 text-gray-800',
-        danger: 'bg-red-600 hover:bg-red-700 text-white',
+const Button = ({ children, variant = 'primary', size = 'md', style = {}, ...rest }: ButtonProps) => {
+    const baseStyle = {
+        borderRadius: '4px',
+        border: '1px solid transparent',
+        cursor: 'pointer',
+        fontWeight: 'bold',
+        transition: 'background-color 0.2s ease-in-out, color 0.2s ease-in-out',
     };
 
     const sizeStyles = {
-        sm: 'py-1 px-3 text-sm',
-        md: 'py-2 px-4 text-md',
-        lg: 'py-3 px-6 text-lg',
+        sm: { padding: '6px 12px', fontSize: '12px' },
+        md: { padding: '8px 16px', fontSize: '14px' },
+        lg: { padding: '12px 24px', fontSize: '16px' },
     };
 
-    // 渡されたclassNameを結合
-    const classes = `${baseStyles} ${variantStyles[variant]} ${sizeStyles[size]} ${className || ''}`;
+    const variantStyles = {
+        primary: {
+            backgroundColor: '#3b82f6',
+            color: 'white',
+            borderColor: '#3b82f6',
+        },
+        secondary: {
+            backgroundColor: '#f3f4f6',
+            color: '#4b5563',
+            borderColor: '#e5e7eb',
+        },
+        danger: {
+            backgroundColor: '#ef4444',
+            color: 'white',
+            borderColor: '#ef4444',
+        },
+    };
+
+    const combinedStyle = {
+        ...baseStyle,
+        ...sizeStyles[size],
+        ...variantStyles[variant],
+        ...style,
+    };
 
     return (
-        <button className={classes} {...rest}>
+        <button style={combinedStyle} {...rest}>
             {children}
         </button>
     );

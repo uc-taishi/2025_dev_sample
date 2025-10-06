@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import Button from '../../components/button';
+import Button from '@/components/button';
 
 // ユーザーデータ型定義
 type User = {
@@ -19,7 +19,7 @@ export default function UsersPage() {
   // ユーザー一覧の取得
   const fetchUsers = async () => {
     try {
-      const res = await fetch('/api/users', { cache: 'no-store' }); // キャッシュを無効化
+      const res = await fetch('/api/users', { cache: 'no-store' });
       if (!res.ok) {
         throw new Error('Failed to fetch users');
       }
@@ -42,9 +42,7 @@ export default function UsersPage() {
         // ユーザー編集
         await fetch('/api/users', {
           method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ id: editingUser.id, name, email }),
         });
         setEditingUser(null);
@@ -52,15 +50,13 @@ export default function UsersPage() {
         // 新規ユーザー作成
         await fetch('/api/users', {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ name, email }),
         });
       }
       setName('');
       setEmail('');
-      fetchUsers(); // データを再取得して画面を更新
+      fetchUsers();
     } catch (error) {
       console.error('Error creating/updating user:', error);
     }
@@ -71,12 +67,10 @@ export default function UsersPage() {
     try {
       await fetch('/api/users', {
         method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ id: userId }),
       });
-      fetchUsers(); // データを再取得して画面を更新
+      fetchUsers();
     } catch (error) {
       console.error('Error deleting user:', error);
     }
@@ -90,34 +84,34 @@ export default function UsersPage() {
   };
 
   return (
-    <div style={{ padding: '20px', maxWidth: '800px', margin: '0 auto' }}>
-      <h1>ユーザー管理</h1>
+    <div style={{ padding: '20px', maxWidth: '800px', margin: '0 auto', fontFamily: 'sans-serif' }}>
+      <h1 style={{ fontSize: '24px', marginBottom: '20px' }}>ユーザー管理</h1>
 
       <form onSubmit={handleSubmit} style={{ marginBottom: '20px', border: '1px solid #ccc', padding: '20px', borderRadius: '8px' }}>
-        <h2>{editingUser ? 'ユーザー編集' : '新規ユーザー作成'}</h2>
+        <h2 style={{ fontSize: '20px', marginBottom: '15px' }}>{editingUser ? 'ユーザー編集' : '新規ユーザー作成'}</h2>
         <div style={{ marginBottom: '10px' }}>
-          <label htmlFor="name">名前:</label>
+          <label htmlFor="name" style={{ marginRight: '10px' }}>名前:</label>
           <input
             id="name"
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
             required
-            style={{ marginLeft: '10px', padding: '5px' }}
+            style={{ padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }}
           />
         </div>
-        <div style={{ marginBottom: '10px' }}>
-          <label htmlFor="email">メールアドレス:</label>
+        <div style={{ marginBottom: '20px' }}>
+          <label htmlFor="email" style={{ marginRight: '10px' }}>メールアドレス:</label>
           <input
             id="email"
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            style={{ marginLeft: '10px', padding: '5px' }}
+            style={{ padding: '8px', border: '1px solid #ccc', borderRadius: '4px' }}
           />
         </div>
-        <Button type="submit">
+        <Button type="submit" variant="primary">
           {editingUser ? '更新' : '作成'}
         </Button>
         {editingUser && (
@@ -139,10 +133,10 @@ export default function UsersPage() {
       <table style={{ width: '100%', borderCollapse: 'collapse', border: '1px solid #ccc' }}>
         <thead>
           <tr style={{ backgroundColor: '#f2f2f2' }}>
-            <th style={{ padding: '10px', border: '1px solid #ccc' }}>ID</th>
-            <th style={{ padding: '10px', border: '1px solid #ccc' }}>名前</th>
-            <th style={{ padding: '10px', border: '1px solid #ccc' }}>メールアドレス</th>
-            <th style={{ padding: '10px', border: '1px solid #ccc' }}>操作</th>
+            <th style={{ padding: '10px', border: '1px solid #ccc', textAlign: 'left' }}>ID</th>
+            <th style={{ padding: '10px', border: '1px solid #ccc', textAlign: 'left' }}>名前</th>
+            <th style={{ padding: '10px', border: '1px solid #ccc', textAlign: 'left' }}>メールアドレス</th>
+            <th style={{ padding: '10px', border: '1px solid #ccc', textAlign: 'left' }}>操作</th>
           </tr>
         </thead>
         <tbody>
@@ -165,4 +159,4 @@ export default function UsersPage() {
       </table>
     </div>
   );
-}
+} 
